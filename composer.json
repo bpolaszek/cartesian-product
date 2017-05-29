@@ -1,0 +1,29 @@
+{
+    "name": "bentools/cartesian-product",
+    "description": "A simple function to generate cartesian products.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BenTools\\CartesianProduct\\" : "src"
+        },
+        "files": ["src/function.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BenTools\\CartesianProduct\\Tests\\" : "tests"
+        },
+        "files": [
+            "vendor/symfony/var-dumper/Resources/functions/dump.php"
+        ]
+    },
+    "require": {
+        "php": ">=5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
+        "satooshi/php-coveralls": "@stable",
+        "symfony/var-dumper": "^3.2"
+    }
+}
