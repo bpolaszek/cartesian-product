@@ -1,8 +1,8 @@
 [![Latest Stable Version](https://poser.pugx.org/bentools/cartesian-product/v/stable)](https://packagist.org/packages/bentools/cartesian-product)
 [![License](https://poser.pugx.org/bentools/cartesian-product/license)](https://packagist.org/packages/bentools/cartesian-product)
-[![Build Status](https://img.shields.io/travis/bpolaszek/php-cartesian-product/master.svg?style=flat-square)](https://travis-ci.org/bpolaszek/php-cartesian-product)
-[![Coverage Status](https://coveralls.io/repos/github/bpolaszek/php-cartesian-product/badge.svg?branch=master)](https://coveralls.io/github/bpolaszek/php-cartesian-product?branch=master)
-[![Quality Score](https://img.shields.io/scrutinizer/g/bpolaszek/php-cartesian-product.svg?style=flat-square)](https://scrutinizer-ci.com/g/bpolaszek/php-cartesian-product)
+[![Build Status](https://img.shields.io/travis/bpolaszek/cartesian-product/master.svg?style=flat-square)](https://travis-ci.org/bpolaszek/cartesian-product)
+[![Coverage Status](https://coveralls.io/repos/github/bpolaszek/cartesian-product/badge.svg?branch=master)](https://coveralls.io/github/bpolaszek/cartesian-product?branch=master)
+[![Quality Score](https://img.shields.io/scrutinizer/g/bpolaszek/cartesian-product.svg?style=flat-square)](https://scrutinizer-ci.com/g/bpolaszek/cartesian-product)
 [![Total Downloads](https://poser.pugx.org/bentools/cartesian-product/downloads)](https://packagist.org/packages/bentools/cartesian-product)
 
 # Cartesian Product
