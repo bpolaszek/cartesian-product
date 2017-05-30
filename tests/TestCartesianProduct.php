@@ -16,6 +16,57 @@ class TestCartesianProduct extends TestCase
         $this->assertArraySubset($expected, $result);
     }
 
+    public function testEmptySet()
+    {
+        $set = [];
+        $this->assertCount(0, iterator_to_array(cartesian_product($set)));
+        $this->assertEquals([], cartesian_product($set)->asArray());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetWithEmptyArraySubset()
+    {
+        $set = [
+            'fruits' => [
+                'strawberry',
+                'raspberry',
+                'blueberry',
+            ],
+            'vegetables' => [],
+            'drinks' => [
+                'beer',
+                'whiskey'
+            ]
+        ];
+        foreach (cartesian_product($set) as $product) {
+            continue;
+        }
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSetWithInvalidSubset()
+    {
+        $set = [
+            'fruits' => [
+                'strawberry',
+                'raspberry',
+                'blueberry',
+            ],
+            'vegetables' => new \stdClass(),
+            'drinks' => [
+                'beer',
+                'whiskey'
+            ]
+        ];
+        foreach (cartesian_product($set) as $product) {
+            continue;
+        }
+    }
+
     public function dataProvider()
     {
         return [

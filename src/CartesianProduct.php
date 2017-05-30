@@ -7,15 +7,20 @@ class CartesianProduct implements \IteratorAggregate
     /**
      * @var array
      */
-    private $cases = [];
+    private $set = [];
+
+    /**
+     * @var bool
+     */
+    private $isRecursiveStep = false;
 
     /**
      * CartesianProduct constructor.
-     * @param array $cases - A multidimensionnal array.
+     * @param array $set - A multidimensionnal array.
      */
-    public function __construct(array $cases)
+    public function __construct(array $set)
     {
-        $this->cases = $cases;
+        $this->set = $set;
     }
 
     /**
@@ -23,23 +28,47 @@ class CartesianProduct implements \IteratorAggregate
      */
     public function getIterator()
     {
-        if (!empty($this->cases)) {
-            $keys = array_keys($this->cases);
-            $key  = end($keys);
-            if ($array = array_pop($this->cases)) {
-                foreach (new self($this->cases) as $product) {
-                    foreach ($array as $value) {
-                        if ($value instanceof \Closure) {
-                            yield $product + [$key => $value()];
-                        } else {
-                            yield $product + [$key => $value];
-                        }
+        if (!empty($this->set)) {
+            $keys = array_keys($this->set);
+            $key = end($keys);
+            $subset = array_pop($this->set);
+            $this->validate($subset, $key);
+            foreach (self::subset($this->set) as $product) {
+                foreach ($subset as $value) {
+                    if ($value instanceof \Closure) {
+                        yield $product + [$key => $value()];
+                    } else {
+                        yield $product + [$key => $value];
                     }
                 }
             }
         } else {
-            yield [];
+            if (true === $this->isRecursiveStep) {
+                yield [];
+            }
         }
+    }
+
+    /**
+     * @param $subset
+     * @param $key
+     */
+    private function validate($subset, $key)
+    {
+        if (!is_array($subset) || empty($subset)) {
+            throw new \InvalidArgumentException(sprintf('Key "%s" should return a non-empty array', $key));
+        }
+    }
+
+    /**
+     * @param array $subset
+     * @return CartesianProduct
+     */
+    private static function subset(array $subset)
+    {
+        $product = new self($subset);
+        $product->isRecursiveStep = true;
+        return $product;
     }
 
     /**
