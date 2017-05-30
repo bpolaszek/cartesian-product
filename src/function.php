@@ -6,10 +6,9 @@ require_once __DIR__ . '/CartesianProduct.php';
 
 /**
  * @param array $cases - A multidimensionnal array.
- * @param bool $resolveClosures - Wether or not we should resolve closures.
  * @return CartesianProduct
  */
-function cartesian_product(array $cases, $resolveClosures = false)
+function cartesian_product(array $cases)
 {
-    return new CartesianProduct($cases, $resolveClosures);
+    return new CartesianProduct($cases);
 }

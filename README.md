@@ -6,11 +6,10 @@
 [![Total Downloads](https://poser.pugx.org/bentools/cartesian-product/downloads)](https://packagist.org/packages/bentools/cartesian-product)
 
 # Cartesian Product
-Provides a simple function to get all combinations from a multi-dimensionnal array.
 
-It has a very light memory footprint since it uses a Generator to create all options.
+A simple, low-memory footprint function to generate  all combinations from a multi-dimensionnal array.
 
-Example
+Usage
 -------
 
 ```php
@@ -18,7 +17,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use function BenTools\CartesianProduct\cartesian_product;
 
-$cases = [
+$data = [
     'hair' => [
         'blond',
         'red'
@@ -26,12 +25,14 @@ $cases = [
     'eyes' => [
         'blue',
         'green',
-        'brown'
+        function () {
+            return 'brown'; // You can use closures to dynamically generate possibilities
+        }
     ]
 ];
 
-foreach (cartesian_product($cases, true) as $possibility) {
-    printf('Hair: %s - Eyes: %s' . PHP_EOL, $possibility['hair'], $possibility['eyes']);
+foreach (cartesian_product($data) as $combination) {
+    printf('Hair: %s - Eyes: %s' . PHP_EOL, $combination['hair'], $combination['eyes']);
 }
 ```
 
@@ -51,7 +52,7 @@ Array output
 Instead of using `foreach` you can dump all possibilities into an array.
 
 ```php
-print_r(cartesian_product($cases, true)->asArray());
+print_r(cartesian_product($data)->asArray());
 ```
 
 Output:
@@ -97,8 +98,12 @@ Array
 )
 ```
 
+
+
 Installation
 ------------
+
+PHP 5.6+ is required.
 ```
 composer require bentools/cartesian-product
 ```

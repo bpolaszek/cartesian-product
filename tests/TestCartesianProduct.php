@@ -10,9 +10,9 @@ class TestCartesianProduct extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testCartesianProduct(array $cases, array $expected, $resolveClosures = false)
+    public function testCartesianProduct(array $cases, array $expected)
     {
-        $result = cartesian_product($cases, $resolveClosures)->asArray();
+        $result = cartesian_product($cases)->asArray();
         $this->assertArraySubset($expected, $result);
     }
 
@@ -203,8 +203,6 @@ class TestCartesianProduct extends TestCase
                     'shape' => 'square',
                 ],
             ],
-            'resolveClosures' => true,
         ];
-
     }
 }
