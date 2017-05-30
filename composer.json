@@ -1,6 +1,6 @@
 {
     "name": "bentools/cartesian-product",
-    "description": "A simple function to generate cartesian products.",
+    "description": "A simple, low-memory footprint function to generate all combinations from a multi-dimensionnal array.",
     "type": "library",
     "license": "MIT",
     "autoload": {

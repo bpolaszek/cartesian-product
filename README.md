@@ -7,7 +7,7 @@
 
 # Cartesian Product
 
-A simple, low-memory footprint function to generate  all combinations from a multi-dimensionnal array.
+A simple, low-memory footprint function to generate all combinations from a multi-dimensionnal array.
 
 Usage
 -------
@@ -113,3 +113,7 @@ Unit tests
 ```
 ./vendor/bin/phpunit
 ```
+
+Credits
+-------
+[Titus](https://stackoverflow.com/a/39174062) on StackOverflow - you really rock.
