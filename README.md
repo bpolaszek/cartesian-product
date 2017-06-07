@@ -99,6 +99,34 @@ Array
 ```
 
 
+Combinations count
+------------------
+
+You can simply count how many combinations your data produce:
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use function BenTools\CartesianProduct\cartesian_product;
+
+$data = [
+    'hair' => [
+        'blond',
+        'red',
+    ],
+    'eyes' => [
+        'blue',
+        'green',
+        'brown',
+    ],
+    'gender' => [
+        'male',
+        'female',
+    ]
+];
+var_dump(count(cartesian_product($data))); // 2 * 3 * 2 = 12
+```
+
 
 Installation
 ------------

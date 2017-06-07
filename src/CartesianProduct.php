@@ -2,7 +2,10 @@
 
 namespace BenTools\CartesianProduct;
 
-class CartesianProduct implements \IteratorAggregate
+use Countable;
+use IteratorAggregate;
+
+class CartesianProduct implements IteratorAggregate, Countable
 {
     /**
      * @var array
@@ -13,6 +16,11 @@ class CartesianProduct implements \IteratorAggregate
      * @var bool
      */
     private $isRecursiveStep = false;
+
+    /**
+     * @var int
+     */
+    private $count;
 
     /**
      * CartesianProduct constructor.
@@ -77,5 +85,19 @@ class CartesianProduct implements \IteratorAggregate
     public function asArray()
     {
         return iterator_to_array($this);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        if (null === $this->count) {
+            $this->count = (int) array_product(array_map(function ($subset, $key) {
+                $this->validate($subset, $key);
+                return count($subset);
+            }, $this->set, array_keys($this->set)));
+        }
+        return $this->count;
     }
 }
