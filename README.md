@@ -136,6 +136,34 @@ PHP 5.6+ is required.
 composer require bentools/cartesian-product
 ```
 
+Performance test
+----------------
+The following example was executed on my Core i7 personnal computer with 8GB RAM.
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+use function BenTools\CartesianProduct\cartesian_product;
+
+$data = array_fill(0, 10, array_fill(0, 5, 'foo'));
+
+$start = microtime(true);
+foreach (cartesian_product($data) as $c => $combination) {
+    continue;
+}
+$end = microtime(true);
+
+printf(
+    'Generated %d combinations in %ss - Memory usage: %sMB / Peak usage: %sMB',
+    ++$c,
+    round($end - $start, 3),
+    round(memory_get_usage() / 1024 / 1024),
+    round(memory_get_peak_usage() / 1024 / 1024)
+);
+```
+
+Output:
+> Generated 9765625 combinations in 1.61s - Memory usage: 0MB / Peak usage: 1MB
+
 Unit tests
 ----------
 ```
