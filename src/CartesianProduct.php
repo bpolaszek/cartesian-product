@@ -44,7 +44,7 @@ class CartesianProduct implements IteratorAggregate, Countable
             foreach (self::subset($this->set) as $product) {
                 foreach ($subset as $value) {
                     if ($value instanceof \Closure) {
-                        yield $product + [$key => $value()];
+                        yield $product + [$key => $value($product)];
                     } else {
                         yield $product + [$key => $value];
                     }

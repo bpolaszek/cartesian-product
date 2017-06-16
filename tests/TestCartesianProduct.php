@@ -77,6 +77,44 @@ class TestCartesianProduct extends TestCase
         $this->assertCount(60, cartesian_product($set)); // Assert we can call it several times
     }
 
+    public function testRetrieveCurrentCombination()
+    {
+        $current = null;
+        $set = [
+            'hair' => [
+                'blond',
+                'dark',
+            ],
+            'skin' => [
+                'white',
+                'black',
+            ],
+            'eyes' => [
+                'blue',
+                function (array $combination) use (&$current) {
+                    if (null === $current) {
+                        $current = $combination;
+                    }
+                    return 'green';
+                },
+            ],
+            'gender' => [
+                'male',
+                'female',
+            ],
+        ];
+
+        foreach (cartesian_product($set) as $product) {
+            continue;
+        }
+        $this->assertNotNull($current);
+        $this->assertInternalType('array', $current);
+        $this->assertArrayHasKey('hair', $current);
+        $this->assertArrayHasKey('skin', $current);
+        $this->assertArrayNotHasKey('eyes', $current);
+        $this->assertArrayNotHasKey('gender', $current);
+    }
+
     public function dataProvider()
     {
         return [
