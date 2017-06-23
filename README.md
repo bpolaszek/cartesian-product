@@ -170,6 +170,13 @@ Unit tests
 ./vendor/bin/phpunit
 ```
 
+See also
+--------
+
+[bentools/string-combinations](https://github.com/bpolaszek/string-combinations)
+
+[bentools/iterable-functions](https://github.com/bpolaszek/php-iterable-functions)
+
 Credits
 -------
 [Titus](https://stackoverflow.com/a/39174062) on StackOverflow - you really rock.
