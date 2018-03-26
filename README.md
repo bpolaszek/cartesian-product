@@ -20,13 +20,16 @@ use function BenTools\CartesianProduct\cartesian_product;
 $data = [
     'hair' => [
         'blond',
-        'red'
+        'black'
     ],
     'eyes' => [
         'blue',
         'green',
-        function () {
-            return 'brown'; // You can use closures to dynamically generate possibilities
+        function (array $combination) { // You can use closures to dynamically generate possibilities
+            if ('black' === $combination['hair']) { // Then you have access to the current combination being built
+                return 'brown';
+            }
+            return 'grey';
         }
     ]
 ];
@@ -40,10 +43,10 @@ Output:
 ```
 Hair: blond - Eyes: blue
 Hair: blond - Eyes: green
-Hair: blond - Eyes: brown
-Hair: red - Eyes: blue
-Hair: red - Eyes: green
-Hair: red - Eyes: brown
+Hair: blond - Eyes: grey
+Hair: black - Eyes: blue
+Hair: black - Eyes: green
+Hair: black - Eyes: brown
 ```
 
 Array output
