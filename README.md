@@ -77,24 +77,24 @@ Array
     [2] => Array
         (
             [hair] => blond
-            [eyes] => brown
+            [eyes] => grey
         )
 
     [3] => Array
         (
-            [hair] => red
+            [hair] => black
             [eyes] => blue
         )
 
     [4] => Array
         (
-            [hair] => red
+            [hair] => black
             [eyes] => green
         )
 
     [5] => Array
         (
-            [hair] => red
+            [hair] => black
             [eyes] => brown
         )
 
