@@ -9,8 +9,8 @@ php:
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer require hirak/prestissimo
-  - travis_retry composer install --no-interaction --prefer-source --dev
+  - travis_retry composer global require hirak/prestissimo
+  - travis_retry composer install --no-interaction --prefer-dist
   - travis_retry phpenv rehash
 
 script:
