@@ -24,6 +24,7 @@ class CartesianProduct implements IteratorAggregate, Countable
 
     /**
      * CartesianProduct constructor.
+     *
      * @param array $set - A multidimensionnal array.
      */
     public function __construct(array $set)
@@ -69,7 +70,7 @@ class CartesianProduct implements IteratorAggregate, Countable
     }
 
     /**
-     * @param array $subset
+     * @param  array $subset
      * @return CartesianProduct
      */
     private static function subset(array $subset)
@@ -93,10 +94,16 @@ class CartesianProduct implements IteratorAggregate, Countable
     public function count()
     {
         if (null === $this->count) {
-            $this->count = (int) array_product(array_map(function ($subset, $key) {
-                $this->validate($subset, $key);
-                return count($subset);
-            }, $this->set, array_keys($this->set)));
+            $this->count = (int) array_product(
+                array_map(
+                    function ($subset, $key) {
+                        $this->validate($subset, $key);
+                        return count($subset);
+                    },
+                    $this->set,
+                    array_keys($this->set)
+                )
+            );
         }
         return $this->count;
     }
