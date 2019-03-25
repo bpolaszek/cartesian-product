@@ -173,12 +173,25 @@ Unit tests
 ./vendor/bin/phpunit
 ```
 
+
+Other implementations
+---------------------
+
+[th3n3rd/cartesian-product](https://github.com/th3n3rd/cartesian-product)
+
+[patchranger/cartesian-iterator](https://github.com/PatchRanger/cartesian-iterator)
+
+[Benchmark](https://github.com/PatchRanger/php-cartesian-benchmark)
+
+
 See also
 --------
 
 [bentools/string-combinations](https://github.com/bpolaszek/string-combinations)
 
 [bentools/iterable-functions](https://github.com/bpolaszek/php-iterable-functions)
+
+
 
 Credits
 -------
