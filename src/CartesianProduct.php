@@ -37,23 +37,21 @@ class CartesianProduct implements IteratorAggregate, Countable
      */
     public function getIterator()
     {
-        if (!empty($this->set)) {
-            $keys = array_keys($this->set);
-            $key = end($keys);
-            $subset = array_pop($this->set);
-            $this->validate($subset, $key);
-            foreach (self::subset($this->set) as $product) {
-                foreach ($subset as $value) {
-                    if ($value instanceof \Closure) {
-                        yield $product + [$key => $value($product)];
-                    } else {
-                        yield $product + [$key => $value];
-                    }
-                }
-            }
-        } else {
+        if ([] === $this->set) {
             if (true === $this->isRecursiveStep) {
                 yield [];
+            }
+
+            return;
+        }
+        
+        $keys = array_keys($this->set);
+        $key = end($keys);
+        $subset = array_pop($this->set);
+        $this->validate($subset, $key);
+        foreach (self::subset($this->set) as $product) {
+            foreach ($subset as $value) {
+                yield $product + [$key => ($value instanceof \Closure ? $value($product) : $value)];
             }
         }
     }
