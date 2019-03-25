@@ -45,13 +45,13 @@ class CartesianProduct implements IteratorAggregate, Countable
             return;
         }
         
-        $keys = array_keys($this->set);
-        $key = end($keys);
-        $subset = array_pop($this->set);
-        $this->validate($subset, $key);
+        $keys = \array_keys($this->set);
+        $last = \end($keys);
+        $subset = \array_pop($this->set);
+        $this->validate($subset, $last);
         foreach (self::subset($this->set) as $product) {
             foreach ($subset as $value) {
-                yield $product + [$key => ($value instanceof \Closure ? $value($product) : $value)];
+                yield $product + [$last => ($value instanceof \Closure ? $value($product) : $value)];
             }
         }
     }
@@ -62,8 +62,8 @@ class CartesianProduct implements IteratorAggregate, Countable
      */
     private function validate($subset, $key)
     {
-        if (!is_array($subset) || empty($subset)) {
-            throw new \InvalidArgumentException(sprintf('Key "%s" should return a non-empty array', $key));
+        if (!\is_array($subset) || empty($subset)) {
+            throw new \InvalidArgumentException(\sprintf('Key "%s" should return a non-empty array', $key));
         }
     }
 
@@ -83,7 +83,7 @@ class CartesianProduct implements IteratorAggregate, Countable
      */
     public function asArray()
     {
-        return iterator_to_array($this);
+        return \iterator_to_array($this);
     }
 
     /**
@@ -92,14 +92,14 @@ class CartesianProduct implements IteratorAggregate, Countable
     public function count()
     {
         if (null === $this->count) {
-            $this->count = (int) array_product(
-                array_map(
+            $this->count = (int) \array_product(
+                \array_map(
                     function ($subset, $key) {
                         $this->validate($subset, $key);
-                        return count($subset);
+                        return \count($subset);
                     },
                     $this->set,
-                    array_keys($this->set)
+                    \array_keys($this->set)
                 )
             );
         }
