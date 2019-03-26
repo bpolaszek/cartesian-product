@@ -3,7 +3,9 @@
 namespace BenTools\CartesianProduct;
 
 use Countable;
+use InvalidArgumentException;
 use IteratorAggregate;
+use Traversable;
 
 class CartesianProduct implements IteratorAggregate, Countable
 {
@@ -62,9 +64,17 @@ class CartesianProduct implements IteratorAggregate, Countable
      */
     private function validate($subset, $key)
     {
-        if (!\is_array($subset) || empty($subset)) {
-            throw new \InvalidArgumentException(\sprintf('Key "%s" should return a non-empty array', $key));
+        // Validate array subset
+        if (\is_array($subset) && !empty($subset)) {
+            return;
         }
+
+        // Validate iterator subset
+        if ($subset instanceof Traversable && $subset instanceof Countable && \count($subset) > 0) {
+            return;
+        }
+
+        throw new InvalidArgumentException(\sprintf('Key "%s" should return a non-empty iterable', $key));
     }
 
     /**

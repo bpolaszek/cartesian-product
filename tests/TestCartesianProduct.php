@@ -45,6 +45,41 @@ class TestCartesianProduct extends TestCase
         }
     }
 
+    public function testSetWithIteratorSubset()
+    {
+        $set = [
+            'fruit'     => [
+                'strawberry',
+                'raspberry',
+            ],
+            'vegetable' => new CountableIterator(['potato', function () {
+                return 'carrot';
+            }]),
+        ];
+
+        $expected = [
+            [
+                'fruit'     => 'strawberry',
+                'vegetable' => 'potato',
+            ],
+            [
+                'fruit'     => 'strawberry',
+                'vegetable' => 'carrot',
+            ],
+            [
+                'fruit'     => 'raspberry',
+                'vegetable' => 'potato',
+            ],
+            [
+                'fruit'     => 'raspberry',
+                'vegetable' => 'carrot',
+            ],
+        ];
+
+        $this->assertEquals($expected, cartesian_product($set)->asArray());
+
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */

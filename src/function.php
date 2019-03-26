@@ -5,10 +5,10 @@ namespace BenTools\CartesianProduct;
 require_once __DIR__ . '/CartesianProduct.php';
 
 /**
- * @param  array $cases - A multidimensionnal array.
+ * @param  array $set - A multidimensionnal array.
  * @return CartesianProduct
  */
-function cartesian_product(array $cases)
+function cartesian_product(array $set)
 {
-    return new CartesianProduct($cases);
+    return new CartesianProduct($set);
 }

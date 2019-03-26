@@ -24,6 +24,6 @@
         "phpunit/phpunit": "^5.0|^6.0",
         "squizlabs/php_codesniffer": "@stable",
         "php-coveralls/php-coveralls": "@stable",
-        "symfony/var-dumper": "^3.2"
+        "symfony/var-dumper": "^3.2|^4.0"
     }
 }
