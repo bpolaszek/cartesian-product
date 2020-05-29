@@ -46,12 +46,13 @@ class CartesianProduct implements IteratorAggregate, Countable
 
             return;
         }
-        
-        $keys = \array_keys($this->set);
+
+        $set = $this->set;
+        $keys = \array_keys($set);
         $last = \end($keys);
-        $subset = \array_pop($this->set);
+        $subset = \array_pop($set);
         $this->validate($subset, $last);
-        foreach (self::subset($this->set) as $product) {
+        foreach (self::subset($set) as $product) {
             foreach ($subset as $value) {
                 yield $product + [$last => ($value instanceof \Closure ? $value($product) : $value)];
             }
