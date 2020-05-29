@@ -12,8 +12,9 @@ class TestCartesianProduct extends TestCase
      */
     public function testCartesianProduct(array $cases, array $expected)
     {
-        $result = cartesian_product($cases)->asArray();
-        $this->assertArraySubset($expected, $result);
+        $result = cartesian_product($cases);
+        $this->assertArraySubset($expected, $result->asArray());
+        $this->assertArraySubset($expected, $result->asArray());
     }
 
     public function testEmptySet()
