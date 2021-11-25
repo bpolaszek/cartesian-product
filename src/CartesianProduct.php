@@ -35,7 +35,7 @@ class CartesianProduct implements IteratorAggregate, Countable
     }
 
     /**
-     * @return \Generator
+     * @return \Traversable
      */
     public function getIterator(): Traversable
     {
