@@ -35,9 +35,9 @@ class CartesianProduct implements IteratorAggregate, Countable
     }
 
     /**
-     * @return \Generator
+     * @return \Traversable
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         if ([] === $this->set) {
             if (true === $this->isRecursiveStep) {
@@ -100,7 +100,7 @@ class CartesianProduct implements IteratorAggregate, Countable
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         if (null === $this->count) {
             $this->count = (int) \array_product(
