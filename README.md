@@ -133,7 +133,7 @@ var_dump(count(cartesian_product($data))); // 2 * 3 * 2 = 12
 Installation
 ------------
 
-PHP 5.6+ is required.
+PHP 7.4+ is required.
 ```
 composer require bentools/cartesian-product
 ```
