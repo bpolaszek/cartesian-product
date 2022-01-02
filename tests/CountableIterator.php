@@ -13,7 +13,7 @@ use IteratorAggregate;
 final class CountableIterator implements IteratorAggregate, Countable
 {
 
-    private $items = [];
+    private array $items = [];
 
     /**
      * CountableIterator constructor.
@@ -25,12 +25,12 @@ final class CountableIterator implements IteratorAggregate, Countable
     }
 
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->items);
     }
 
-    public function count()
+    public function count(): int
     {
         return \count($this->items);
     }

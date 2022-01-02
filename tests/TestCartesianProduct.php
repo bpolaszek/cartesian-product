@@ -2,33 +2,35 @@
 
 namespace BenTools\CartesianProduct\Tests;
 
-use function BenTools\CartesianProduct\cartesian_product;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use PHPUnit\Framework\TestCase;
+
+use function BenTools\CartesianProduct\cartesian_product;
 
 class TestCartesianProduct extends TestCase
 {
+    use ArraySubsetAsserts;
+
     /**
      * @dataProvider dataProvider
      */
-    public function testCartesianProduct(array $cases, array $expected)
+    public function testCartesianProduct(array $cases, array $expected): void
     {
         $result = cartesian_product($cases);
         $this->assertArraySubset($expected, $result->asArray());
         $this->assertArraySubset($expected, $result->asArray());
     }
 
-    public function testEmptySet()
+    public function testEmptySet(): void
     {
         $set = [];
         $this->assertCount(0, iterator_to_array(cartesian_product($set)));
         $this->assertEquals([], cartesian_product($set)->asArray());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSetWithEmptyArraySubset()
+    public function testSetWithEmptyArraySubset(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $set = [
             'fruits' => [
                 'strawberry',
@@ -46,7 +48,7 @@ class TestCartesianProduct extends TestCase
         }
     }
 
-    public function testSetWithIteratorSubset()
+    public function testSetWithIteratorSubset(): void
     {
         $set = [
             'fruit'     => [
@@ -81,11 +83,9 @@ class TestCartesianProduct extends TestCase
 
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSetWithInvalidSubset()
+    public function testSetWithInvalidSubset(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $set = [
             'fruits' => [
                 'strawberry',
@@ -103,7 +103,7 @@ class TestCartesianProduct extends TestCase
         }
     }
 
-    public function testCount()
+    public function testCount(): void
     {
         $set = [
             ['a', 'b', 'c', 'd', 'e', 'f'],
@@ -113,7 +113,7 @@ class TestCartesianProduct extends TestCase
         $this->assertCount(60, cartesian_product($set)); // Assert we can call it several times
     }
 
-    public function testRetrieveCurrentCombination()
+    public function testRetrieveCurrentCombination(): void
     {
         $current = null;
         $set = [
@@ -144,14 +144,14 @@ class TestCartesianProduct extends TestCase
             continue;
         }
         $this->assertNotNull($current);
-        $this->assertInternalType('array', $current);
+        $this->assertIsArray($current);
         $this->assertArrayHasKey('hair', $current);
         $this->assertArrayHasKey('skin', $current);
         $this->assertArrayNotHasKey('eyes', $current);
         $this->assertArrayNotHasKey('gender', $current);
     }
 
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             'shapesAndColors'      => $this->shapesAndColors(),
@@ -161,7 +161,7 @@ class TestCartesianProduct extends TestCase
         ];
     }
 
-    private function shapesAndColors()
+    private function shapesAndColors(): array
     {
         return [
             'cases'    => [
@@ -217,7 +217,7 @@ class TestCartesianProduct extends TestCase
         ];
     }
 
-    private function moreShapesThanColors()
+    private function moreShapesThanColors(): array
     {
         return [
             'cases'    => [
@@ -260,7 +260,7 @@ class TestCartesianProduct extends TestCase
         ];
     }
 
-    private function moreColorsThanShapes()
+    private function moreColorsThanShapes(): array
     {
         return [
             'cases'    => [
@@ -303,7 +303,7 @@ class TestCartesianProduct extends TestCase
         ];
     }
 
-    private function iCanHazClozures()
+    private function iCanHazClozures(): array
     {
         return [
             'cases'           => [
