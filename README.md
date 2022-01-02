@@ -1,8 +1,7 @@
 [![Latest Stable Version](https://poser.pugx.org/bentools/cartesian-product/v/stable)](https://packagist.org/packages/bentools/cartesian-product)
 [![License](https://poser.pugx.org/bentools/cartesian-product/license)](https://packagist.org/packages/bentools/cartesian-product)
-[![Build Status](https://img.shields.io/travis/bpolaszek/cartesian-product/master.svg?style=flat-square)](https://travis-ci.org/bpolaszek/cartesian-product)
-[![Coverage Status](https://coveralls.io/repos/github/bpolaszek/cartesian-product/badge.svg?branch=master)](https://coveralls.io/github/bpolaszek/cartesian-product?branch=master)
-[![Quality Score](https://img.shields.io/scrutinizer/g/bpolaszek/cartesian-product.svg?style=flat-square)](https://scrutinizer-ci.com/g/bpolaszek/cartesian-product)
+[![CI Workflow](https://github.com/bpolaszek/cartesian-product/actions/workflows/ci-workflow.yml/badge.svg)](https://github.com/bpolaszek/cartesian-product/actions/workflows/ci-workflow.yml)
+[![Coverage](https://codecov.io/gh/bpolaszek/cartesian-product/branch/master/graph/badge.svg?token=3CF5QH0CKG)](https://codecov.io/gh/bpolaszek/cartesian-product)
 [![Total Downloads](https://poser.pugx.org/bentools/cartesian-product/downloads)](https://packagist.org/packages/bentools/cartesian-product)
 
 # Cartesian Product
