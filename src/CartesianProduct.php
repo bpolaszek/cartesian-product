@@ -66,6 +66,28 @@ final class CartesianProduct implements IteratorAggregate, Countable
     }
 
     /**
+     * @return array<array<TKey, TValue>>
+     */
+    public function asArray(): array
+    {
+        return iterator_to_array($this);
+    }
+
+    public function count(): int
+    {
+        return $this->count ??= (int) array_product(
+            array_map(
+                function ($subset, $key) {
+                    $this->validate($subset, $key);
+                    return count($subset);
+                },
+                $this->set,
+                array_keys($this->set)
+            )
+        );
+    }
+
+    /**
      * @param mixed $subset
      * @param TKey $key
      */
@@ -94,27 +116,5 @@ final class CartesianProduct implements IteratorAggregate, Countable
         $product->isRecursiveStep = true;
 
         return $product;
-    }
-
-    /**
-     * @return array<array<TKey, TValue>>
-     */
-    public function asArray(): array
-    {
-        return iterator_to_array($this);
-    }
-
-    public function count(): int
-    {
-        return $this->count ??= (int) array_product(
-            array_map(
-                function ($subset, $key) {
-                    $this->validate($subset, $key);
-                    return count($subset);
-                },
-                $this->set,
-                array_keys($this->set)
-            )
-        );
     }
 }

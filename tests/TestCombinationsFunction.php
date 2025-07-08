@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 use function BenTools\CartesianProduct\combinations;
 
+use InvalidArgumentException;
+use stdClass;
+
 class TestCombinationsFunction extends TestCase
 {
     /**
@@ -29,7 +32,7 @@ class TestCombinationsFunction extends TestCase
 
     public function testSetWithEmptyArraySubset(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $set = [
             'fruits' => [
                 'strawberry',
@@ -84,14 +87,14 @@ class TestCombinationsFunction extends TestCase
 
     public function testSetWithInvalidSubset(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $set = [
             'fruits' => [
                 'strawberry',
                 'raspberry',
                 'blueberry',
             ],
-            'vegetables' => new \stdClass(),
+            'vegetables' => new stdClass(),
             'drinks' => [
                 'beer',
                 'whiskey'

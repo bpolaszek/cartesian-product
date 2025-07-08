@@ -5,6 +5,7 @@ namespace BenTools\CartesianProduct\Tests;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * Class CountableIterator
@@ -25,7 +26,7 @@ final class CountableIterator implements IteratorAggregate, Countable
     }
 
 
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
