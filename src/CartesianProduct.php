@@ -23,7 +23,7 @@ use function iterator_to_array;
  * @template TValue
  * @implements IteratorAggregate<array<TKey, TValue>>
  */
-class CartesianProduct implements IteratorAggregate, Countable
+final class CartesianProduct implements IteratorAggregate, Countable
 {
     /**
      * @var array<TKey, iterable<TValue>>
