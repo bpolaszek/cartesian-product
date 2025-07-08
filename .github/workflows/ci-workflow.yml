@@ -24,7 +24,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --prefer-dist --no-progress --ignore-platform-req=php
 
       - name: Check code style
         run: vendor/bin/php-cs-fixer check
@@ -57,7 +57,7 @@ jobs:
           coverage: xdebug
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --prefer-dist --no-progress --ignore-platform-req=php
 
       - name: Run tests
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
