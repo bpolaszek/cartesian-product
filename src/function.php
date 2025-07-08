@@ -10,7 +10,7 @@ require_once __DIR__ . '/CartesianProduct.php';
  * @param  array<TKey, iterable<TValue>> $set - A multidimensionnal array.
  * @return CartesianProduct<TKey, TValue>
  */
-function cartesian_product(array $set)
+function cartesian_product(array $set): CartesianProduct
 {
     return new CartesianProduct($set);
 }
