@@ -2,32 +2,38 @@
 
 namespace BenTools\CartesianProduct;
 
+use Closure;
 use Countable;
 use InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
 
+use function array_keys;
+use function array_map;
+use function array_pop;
+use function array_product;
+use function count;
+use function end;
+use function is_array;
+use function iterator_to_array;
+
+/**
+ * @internal - use the function `cartesian_product()` instead.
+ * @template TKey
+ * @template TValue
+ * @implements IteratorAggregate<array<TKey, TValue>>
+ */
 class CartesianProduct implements IteratorAggregate, Countable
 {
     /**
-     * @var array
+     * @var array<TKey, iterable<TValue>>
      */
-    private $set = [];
+    private array $set;
+    private bool $isRecursiveStep = false;
+    private int $count;
 
     /**
-     * @var bool
-     */
-    private $isRecursiveStep = false;
-
-    /**
-     * @var int
-     */
-    private $count;
-
-    /**
-     * CartesianProduct constructor.
-     *
-     * @param array $set - A multidimensionnal array.
+     * @param array<TKey, iterable<TValue>> $set
      */
     public function __construct(array $set)
     {
@@ -35,7 +41,7 @@ class CartesianProduct implements IteratorAggregate, Countable
     }
 
     /**
-     * @return \Traversable
+     * @return Traversable<array<TKey, TValue>>
      */
     public function getIterator(): Traversable
     {
@@ -48,30 +54,30 @@ class CartesianProduct implements IteratorAggregate, Countable
         }
 
         $set = $this->set;
-        $keys = \array_keys($set);
-        $last = \end($keys);
-        $subset = \array_pop($set);
+        $keys = array_keys($set);
+        $last = end($keys);
+        $subset = array_pop($set);
         $this->validate($subset, $last);
         foreach (self::subset($set) as $product) {
             foreach ($subset as $value) {
-                yield $product + [$last => ($value instanceof \Closure ? $value($product) : $value)];
+                yield $product + [$last => ($value instanceof Closure ? $value($product) : $value)];
             }
         }
     }
 
     /**
-     * @param $subset
-     * @param $key
+     * @param mixed $subset
+     * @param TKey $key
      */
-    private function validate($subset, $key)
+    private function validate($subset, $key): void
     {
         // Validate array subset
-        if (\is_array($subset) && !empty($subset)) {
+        if (is_array($subset) && !empty($subset)) {
             return;
         }
 
         // Validate iterator subset
-        if ($subset instanceof Traversable && $subset instanceof Countable && \count($subset) > 0) {
+        if ($subset instanceof Traversable && $subset instanceof Countable && count($subset) > 0) {
             return;
         }
 
@@ -79,41 +85,36 @@ class CartesianProduct implements IteratorAggregate, Countable
     }
 
     /**
-     * @param  array $subset
-     * @return CartesianProduct
+     * @param array<TKey, iterable<TValue>> $subset
+     * @return CartesianProduct<TKey, TValue>
      */
-    private static function subset(array $subset)
+    private static function subset(array $subset): self
     {
         $product = new self($subset);
         $product->isRecursiveStep = true;
+
         return $product;
     }
 
     /**
-     * @return array
+     * @return array<array<TKey, TValue>>
      */
-    public function asArray()
+    public function asArray(): array
     {
-        return \iterator_to_array($this);
+        return iterator_to_array($this);
     }
 
-    /**
-     * @return int
-     */
     public function count(): int
     {
-        if (null === $this->count) {
-            $this->count = (int) \array_product(
-                \array_map(
-                    function ($subset, $key) {
-                        $this->validate($subset, $key);
-                        return \count($subset);
-                    },
-                    $this->set,
-                    \array_keys($this->set)
-                )
-            );
-        }
-        return $this->count;
+        return $this->count ??= (int) array_product(
+            array_map(
+                function ($subset, $key) {
+                    $this->validate($subset, $key);
+                    return count($subset);
+                },
+                $this->set,
+                array_keys($this->set)
+            )
+        );
     }
 }
