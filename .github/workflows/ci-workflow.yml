@@ -8,7 +8,7 @@ on:
 
 jobs:
   code-style:
-    name: Code Style & Static Analysis
+    name: Code Style
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,7 +27,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Check code style
-        run: vendor/bin/phpcs --standard=psr2 -n src/
+        run: vendor/bin/php-cs-fixer check
 
 
   tests:
