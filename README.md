@@ -14,7 +14,7 @@ Usage
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
 
-use function BenTools\CartesianProduct\cartesian_product;
+use function BenTools\CartesianProduct\combinations;
 
 $data = [
     'hair' => [
@@ -33,7 +33,7 @@ $data = [
     ]
 ];
 
-foreach (cartesian_product($data) as $combination) {
+foreach (combinations($data) as $combination) {
     printf('Hair: %s - Eyes: %s' . PHP_EOL, $combination['hair'], $combination['eyes']);
 }
 ```
@@ -53,8 +53,11 @@ Array output
 
 Instead of using `foreach` you can dump all possibilities into an array.
 
+> [!WARNING]
+> This will dump all combinations in memory, so be careful with large datasets.
+
 ```php
-print_r(cartesian_product($data)->asArray());
+print_r(combinations($data)->asArray());
 ```
 
 Output:
@@ -109,7 +112,7 @@ You can simply count how many combinations your data produce:
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
 
-use function BenTools\CartesianProduct\cartesian_product;
+use function BenTools\CartesianProduct\combinations;
 
 $data = [
     'hair' => [
@@ -126,7 +129,7 @@ $data = [
         'female',
     ]
 ];
-var_dump(count(cartesian_product($data))); // 2 * 3 * 2 = 12
+var_dump(count(combinations($data))); // 2 * 3 * 2 = 12
 ```
 
 
@@ -144,12 +147,12 @@ The following example was executed on my Core i7 personnal computer with 8GB RAM
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
-use function BenTools\CartesianProduct\cartesian_product;
+use function BenTools\CartesianProduct\combinations;
 
 $data = array_fill(0, 10, array_fill(0, 5, 'foo'));
 
 $start = microtime(true);
-foreach (cartesian_product($data) as $c => $combination) {
+foreach (combinations($data) as $c => $combination) {
     continue;
 }
 $end = microtime(true);

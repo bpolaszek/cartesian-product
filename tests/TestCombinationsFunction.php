@@ -2,30 +2,29 @@
 
 namespace BenTools\CartesianProduct\Tests;
 
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+error_reporting(E_ALL);
+
 use PHPUnit\Framework\TestCase;
 
-use function BenTools\CartesianProduct\cartesian_product;
+use function BenTools\CartesianProduct\combinations;
 
-class TestCartesianProduct extends TestCase
+class TestCombinationsFunction extends TestCase
 {
-    use ArraySubsetAsserts;
-
     /**
      * @dataProvider dataProvider
      */
-    public function testCartesianProduct(array $cases, array $expected): void
+    public function testCombinations(array $cases, array $expected): void
     {
-        $result = cartesian_product($cases);
-        $this->assertArraySubset($expected, $result->asArray());
-        $this->assertArraySubset($expected, $result->asArray());
+        $result = combinations($cases);
+        $this->assertEquals($expected, $result->asArray());
+        $this->assertEquals($expected, $result->asArray());
     }
 
     public function testEmptySet(): void
     {
         $set = [];
-        $this->assertCount(0, iterator_to_array(cartesian_product($set)));
-        $this->assertEquals([], cartesian_product($set)->asArray());
+        $this->assertCount(0, iterator_to_array(combinations($set)));
+        $this->assertEquals([], combinations($set)->asArray());
     }
 
     public function testSetWithEmptyArraySubset(): void
@@ -43,7 +42,7 @@ class TestCartesianProduct extends TestCase
                 'whiskey'
             ]
         ];
-        foreach (cartesian_product($set) as $product) {
+        foreach (combinations($set) as $product) {
             continue;
         }
     }
@@ -79,7 +78,7 @@ class TestCartesianProduct extends TestCase
             ],
         ];
 
-        $this->assertEquals($expected, cartesian_product($set)->asArray());
+        $this->assertEquals($expected, combinations($set)->asArray());
 
     }
 
@@ -98,7 +97,7 @@ class TestCartesianProduct extends TestCase
                 'whiskey'
             ]
         ];
-        foreach (cartesian_product($set) as $product) {
+        foreach (combinations($set) as $product) {
             continue;
         }
     }
@@ -109,8 +108,8 @@ class TestCartesianProduct extends TestCase
             ['a', 'b', 'c', 'd', 'e', 'f'],
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         ];
-        $this->assertCount(60, cartesian_product($set));
-        $this->assertCount(60, cartesian_product($set)); // Assert we can call it several times
+        $this->assertCount(60, combinations($set));
+        $this->assertCount(60, combinations($set)); // Assert we can call it several times
     }
 
     public function testRetrieveCurrentCombination(): void
@@ -140,7 +139,7 @@ class TestCartesianProduct extends TestCase
             ],
         ];
 
-        foreach (cartesian_product($set) as $product) {
+        foreach (combinations($set) as $product) {
             continue;
         }
         $this->assertNotNull($current);
