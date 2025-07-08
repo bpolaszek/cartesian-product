@@ -2,23 +2,25 @@
 
 namespace BenTools\CartesianProduct\Tests;
 
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
 use PHPUnit\Framework\TestCase;
 
 use function BenTools\CartesianProduct\cartesian_product;
 
-class TestCartesianProduct extends TestCase
-{
-    use ArraySubsetAsserts;
+use InvalidArgumentException;
+use stdClass;
 
+class TestCartesianProductFunction extends TestCase
+{
     /**
      * @dataProvider dataProvider
      */
-    public function testCartesianProduct(array $cases, array $expected): void
+    public function testLegacyCartesianProduct(array $cases, array $expected): void
     {
         $result = cartesian_product($cases);
-        $this->assertArraySubset($expected, $result->asArray());
-        $this->assertArraySubset($expected, $result->asArray());
+        $this->assertEquals($expected, $result->asArray());
+        $this->assertEquals($expected, $result->asArray());
     }
 
     public function testEmptySet(): void
@@ -30,7 +32,7 @@ class TestCartesianProduct extends TestCase
 
     public function testSetWithEmptyArraySubset(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $set = [
             'fruits' => [
                 'strawberry',
@@ -85,14 +87,14 @@ class TestCartesianProduct extends TestCase
 
     public function testSetWithInvalidSubset(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $set = [
             'fruits' => [
                 'strawberry',
                 'raspberry',
                 'blueberry',
             ],
-            'vegetables' => new \stdClass(),
+            'vegetables' => new stdClass(),
             'drinks' => [
                 'beer',
                 'whiskey'
