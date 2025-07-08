@@ -9,15 +9,15 @@ on:
 jobs:
   code-style:
     name: Code Style & Static Analysis
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.4
           extensions: mbstring, pcntl
 
       - name: Validate composer.json and composer.lock
@@ -32,7 +32,7 @@ jobs:
 
   tests:
     name: Test Suite
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       max-parallel: 10
       matrix:
@@ -40,6 +40,10 @@ jobs:
           - 7.4
           - 8.0
           - 8.1
+          - 8.2
+          - 8.3
+          - 8.4
+          - 8.5
 
     steps:
       - name: Checkout
@@ -59,6 +63,6 @@ jobs:
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
