@@ -127,6 +127,30 @@ $data = [
 var_dump(count(combinations($data))); // 2 * 3 * 2 = 12
 ```
 
+Filtering combinations
+----------------------
+
+You can filter combinations using the `filter` method. This is useful if you want to skip some combinations based on certain criteria:
+
+```php
+use function BenTools\CartesianProduct\combinations;
+
+$data = [
+    'hair' => [
+        'blond',
+        'black'
+    ],
+    'eyes' => [
+        'blue',
+        'green',
+    ]
+];
+
+foreach (combinations($data)->filter(fn (array $combination) => 'green' !== $combination['eyes']) as $combination) {
+    printf('Hair: %s - Eyes: %s' . PHP_EOL, $combination['hair'], $combination['eyes']);
+}
+```
+
 Map output
 ----------
 

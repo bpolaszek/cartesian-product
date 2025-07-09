@@ -159,6 +159,40 @@ it('maps data with a function', function () {
     ]);
 });
 
+it('filters data with a function', function () {
+    $set = [
+        'vegetable' => [
+            'potato',
+            'carrot',
+        ],
+        'color' => [
+            'yellow',
+            'orange',
+            'green',
+        ],
+    ];
+
+    $combinations = combinations($set)->filter(fn (array $combination) => $combination['color'] !== 'green');
+    expect([...$combinations])->toBe([
+        [
+            'vegetable' => 'potato',
+            'color' => 'yellow',
+        ],
+        [
+            'vegetable' => 'potato',
+            'color' => 'orange',
+        ],
+        [
+            'vegetable' => 'carrot',
+            'color' => 'yellow',
+        ],
+        [
+            'vegetable' => 'carrot',
+            'color' => 'orange',
+        ],
+    ]);
+});
+
 dataset('data provider', function () {
     return [
         'shapesAndColors' => shapesAndColors(),

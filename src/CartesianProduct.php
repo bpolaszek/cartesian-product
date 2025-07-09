@@ -31,6 +31,7 @@ final class CartesianProduct implements IteratorAggregate, Countable
     private array $set;
     private bool $isRecursiveStep = false;
     private int $count;
+    private ?Closure $filterCallback = null;
     private ?Closure $mapCallback = null;
 
     /**
@@ -39,6 +40,14 @@ final class CartesianProduct implements IteratorAggregate, Countable
     public function __construct(array $set)
     {
         $this->set = $set;
+    }
+
+    public function filter(callable $callback): self
+    {
+        $clone = clone $this;
+        $clone->filterCallback = Closure::fromCallable($callback);
+
+        return $clone;
     }
 
     public function each(callable $callback): self
@@ -70,6 +79,9 @@ final class CartesianProduct implements IteratorAggregate, Countable
         foreach (self::subset($set) as $product) {
             foreach ($subset as $value) {
                 $combination = $product + [$last => ($value instanceof Closure ? $value($product) : $value)];
+                if ($this->filterCallback && !($this->filterCallback)($combination)) {
+                    continue;
+                }
                 yield $this->mapCallback ? ($this->mapCallback)($combination) : $combination;
             }
         }
