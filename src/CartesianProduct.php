@@ -18,7 +18,7 @@ use function is_array;
 use function iterator_to_array;
 
 /**
- * @internal - use the function `cartesian_product()` instead.
+ * @internal - use the function `combinations()` instead.
  * @template TKey
  * @template TValue
  * @implements IteratorAggregate<array<TKey, TValue>>
@@ -31,6 +31,8 @@ final class CartesianProduct implements IteratorAggregate, Countable
     private array $set;
     private bool $isRecursiveStep = false;
     private int $count;
+    private ?Closure $filterCallback = null;
+    private ?Closure $mapCallback = null;
 
     /**
      * @param array<TKey, iterable<TValue>> $set
@@ -38,6 +40,22 @@ final class CartesianProduct implements IteratorAggregate, Countable
     public function __construct(array $set)
     {
         $this->set = $set;
+    }
+
+    public function filter(callable $callback): self
+    {
+        $clone = clone $this;
+        $clone->filterCallback = Closure::fromCallable($callback);
+
+        return $clone;
+    }
+
+    public function each(callable $callback): self
+    {
+        $clone = clone $this;
+        $clone->mapCallback = Closure::fromCallable($callback);
+
+        return $clone;
     }
 
     /**
@@ -60,7 +78,11 @@ final class CartesianProduct implements IteratorAggregate, Countable
         $this->validate($subset, $last);
         foreach (self::subset($set) as $product) {
             foreach ($subset as $value) {
-                yield $product + [$last => ($value instanceof Closure ? $value($product) : $value)];
+                $combination = $product + [$last => ($value instanceof Closure ? $value($product) : $value)];
+                if ($this->filterCallback && !($this->filterCallback)($combination)) {
+                    continue;
+                }
+                yield $this->mapCallback ? ($this->mapCallback)($combination) : $combination;
             }
         }
     }
@@ -91,7 +113,7 @@ final class CartesianProduct implements IteratorAggregate, Countable
      * @param mixed $subset
      * @param TKey $key
      */
-    private function validate($subset, $key): void
+    private function validate(mixed $subset, $key): void
     {
         // Validate array subset
         if (is_array($subset) && !empty($subset)) {

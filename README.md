@@ -12,8 +12,6 @@ Usage
 -------
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
-
 use function BenTools\CartesianProduct\combinations;
 
 $data = [
@@ -103,15 +101,12 @@ Array
 )
 ```
 
-
 Combinations count
 ------------------
 
-You can simply count how many combinations your data produce:
+You can simply count how many combinations your data produce (this will not generate any combination):
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
-
 use function BenTools\CartesianProduct\combinations;
 
 $data = [
@@ -132,11 +127,54 @@ $data = [
 var_dump(count(combinations($data))); // 2 * 3 * 2 = 12
 ```
 
+Filtering combinations
+----------------------
+
+You can filter combinations using the `filter` method. This is useful if you want to skip some combinations based on certain criteria:
+
+```php
+use function BenTools\CartesianProduct\combinations;
+
+$data = [
+    'hair' => [
+        'blond',
+        'black'
+    ],
+    'eyes' => [
+        'blue',
+        'green',
+    ]
+];
+
+foreach (combinations($data)->filter(fn (array $combination) => 'green' !== $combination['eyes']) as $combination) {
+    printf('Hair: %s - Eyes: %s' . PHP_EOL, $combination['hair'], $combination['eyes']);
+}
+```
+
+Map output
+----------
+
+You can use the `each` method to transform each combination into a different format:
+
+```php
+use App\Entity\Book;
+
+use function BenTools\CartesianProduct\combinations;
+
+$books = [
+    'author' => ['Isaac Asimov', 'Arthur C. Clarke'],
+    'genre' => ['Science Fiction', 'Fantasy'],
+]
+
+foreach (combinations($books)->each(fn (array $combination) => Book::fromArray($combination)) as $book) {
+    assert($book instanceof Book);
+}
+```
 
 Installation
 ------------
 
-PHP 7.4+ is required.
+PHP 8.2+ is required.
 ```
 composer require bentools/cartesian-product
 ```
@@ -146,7 +184,6 @@ Performance test
 The following example was executed on my Core i7 personnal computer with 8GB RAM.
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
 use function BenTools\CartesianProduct\combinations;
 
 $data = array_fill(0, 10, array_fill(0, 5, 'foo'));
@@ -172,7 +209,7 @@ Output:
 Unit tests
 ----------
 ```
-./vendor/bin/phpunit
+./vendor/bin/pest
 ```
 
 
