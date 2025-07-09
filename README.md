@@ -136,7 +136,7 @@ var_dump(count(combinations($data))); // 2 * 3 * 2 = 12
 Installation
 ------------
 
-PHP 7.4+ is required.
+PHP 8.2+ is required.
 ```
 composer require bentools/cartesian-product
 ```
@@ -172,7 +172,7 @@ Output:
 Unit tests
 ----------
 ```
-./vendor/bin/phpunit
+./vendor/bin/pest
 ```
 
 

@@ -18,11 +18,17 @@
         ]
     },
     "require": {
-        "php": ">=7.4"
+        "php": "^8.2"
     },
     "require-dev": {
         "symfony/var-dumper": "^6.0|^7.0",
-        "phpunit/phpunit": "^9.0",
-        "friendsofphp/php-cs-fixer": "^3.82"
+        "friendsofphp/php-cs-fixer": "^3.82",
+        "pestphp/pest": "^3.8",
+        "pestphp/pest-plugin-drift": "^3.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
 }
