@@ -193,6 +193,31 @@ it('filters data with a function', function () {
     ]);
 });
 
+it('emits a notice when counting a filtered set', function () {
+    set_error_handler(fn ($code, $message) => throw new RuntimeException($message, $code));
+    $set = [
+        'vegetable' => [
+            'potato',
+            'carrot',
+        ],
+        'color' => [
+            'yellow',
+            'orange',
+            'green',
+        ],
+    ];
+
+    $combinations = combinations($set)->filter(fn (array $combination) => $combination['color'] !== 'green');
+    try {
+        count($combinations);
+    } finally {
+        restore_error_handler();
+    }
+})->throws(
+    RuntimeException::class,
+    'The `filter` method is not supported for counting combinations. The result may not be accurate.',
+);
+
 dataset('data provider', function () {
     return [
         'shapesAndColors' => shapesAndColors(),

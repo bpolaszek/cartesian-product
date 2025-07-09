@@ -16,6 +16,7 @@ use function count;
 use function end;
 use function is_array;
 use function iterator_to_array;
+use function trigger_error;
 
 /**
  * @internal - use the function `combinations()` instead.
@@ -97,6 +98,12 @@ final class CartesianProduct implements IteratorAggregate, Countable
 
     public function count(): int
     {
+        if ($this->filterCallback) {
+            trigger_error(
+                'The `filter` method is not supported for counting combinations. The result may not be accurate.',
+            );
+        }
+
         return $this->count ??= (int) array_product(
             array_map(
                 function ($subset, $key) {
