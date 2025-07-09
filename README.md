@@ -12,8 +12,6 @@ Usage
 -------
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
-
 use function BenTools\CartesianProduct\combinations;
 
 $data = [
@@ -103,15 +101,12 @@ Array
 )
 ```
 
-
 Combinations count
 ------------------
 
-You can simply count how many combinations your data produce:
+You can simply count how many combinations your data produce (this will not generate any combination):
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
-
 use function BenTools\CartesianProduct\combinations;
 
 $data = [
@@ -132,6 +127,25 @@ $data = [
 var_dump(count(combinations($data))); // 2 * 3 * 2 = 12
 ```
 
+Map output
+----------
+
+You can use the `each` method to transform each combination into a different format:
+
+```php
+use App\Entity\Book;
+
+use function BenTools\CartesianProduct\combinations;
+
+$books = [
+    'author' => ['Isaac Asimov', 'Arthur C. Clarke'],
+    'genre' => ['Science Fiction', 'Fantasy'],
+]
+
+foreach (combinations($books)->each(fn (array $combination) => Book::fromArray($combination)) as $book) {
+    assert($book instanceof Book);
+}
+```
 
 Installation
 ------------
@@ -146,7 +160,6 @@ Performance test
 The following example was executed on my Core i7 personnal computer with 8GB RAM.
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
 use function BenTools\CartesianProduct\combinations;
 
 $data = array_fill(0, 10, array_fill(0, 5, 'foo'));

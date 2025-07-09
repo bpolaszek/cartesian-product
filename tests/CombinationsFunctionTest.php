@@ -140,6 +140,25 @@ it('retrieves the current combination being generated', function () {
     ;
 });
 
+it('maps data with a function', function () {
+    $set = [
+        'vegetable' => [
+            'potato',
+        ],
+        'color' => [
+            'yellow',
+        ],
+    ];
+
+    $combinations = combinations($set)->each(fn (array $combination) => array_map(strtoupper(...), $combination));
+    expect([...$combinations])->toBe([
+        [
+            'vegetable' => 'POTATO',
+            'color' => 'YELLOW',
+        ],
+    ]);
+});
+
 dataset('data provider', function () {
     return [
         'shapesAndColors' => shapesAndColors(),
